@@ -4,22 +4,25 @@ class PigLatinizer
   end
 
   def piglatinize(word)
-    constants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "x", "z"]
+    constants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x","y", "z"]
     vowels = ["a", "e", "i", "o", "u"]
     pig_lantin_word = []
-    if word.include?(' ')
-      binding.pry
-    elsif constants.include?(word.downcase.split('')[0]) && constants.include?(word.downcase.split('')[1]) && constants.include?(word.downcase.split('')[2])
-      word_begins_with_three_constants(word)
-    elsif constants.include?(word.downcase.split('')[0]) && constants.include?(word.downcase.split('')[1])
-      word_begins_with_two_constants(word)
-    elsif constants.include?(word.downcase.split('')[0])
-      word_begins_with_a_constant(word)
-    elsif word == "I"
-      word + "way"
-    elsif vowels.include?(word.downcase.split('')[0])
-      word_begins_with_a_vowel(word)
+    words = word.split(' ')
+    words.each do |word|
+      if constants.include?(word.downcase.split('')[0]) && constants.include?(word.downcase.split('')[1]) && constants.include?(word.downcase.split('')[2])
+        pig_lantin_word.push(word_begins_with_three_constants(word))
+      elsif constants.include?(word.downcase.split('')[0]) && constants.include?(word.downcase.split('')[1])
+        pig_lantin_word.push(word_begins_with_two_constants(word))
+      elsif constants.include?(word.downcase.split('')[0])
+        pig_lantin_word.push(word_begins_with_a_constant(word))
+      elsif word == "I" || "i"
+        new_word = word + "way"
+        pig_lantin_word.push(new_word)
+      elsif vowels.include?(word.downcase.split('')[0])
+        pig_lantin_word.push(word_begins_with_a_vowel(word))
+      end
     end
+    pig_lantin_word.join(' ')
   end
 
   def word_begins_with_a_constant(word)
